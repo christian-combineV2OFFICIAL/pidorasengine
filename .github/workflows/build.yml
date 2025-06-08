@@ -1,38 +1,6 @@
 on: [push, pull_request]
 
 jobs:
-  build-linux-i386:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Build linux-i386
-      run: |
-        scripts/build-ubuntu-i386.sh
-    - name: 'Upload Artifact'
-      uses: actions/upload-artifact@v3
-      with:
-        name: linux-i386
-        path: bin
-
-
-  build-windows-i386:
-    runs-on: windows-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Build windows-i386
-      run: |
-        git submodule init && git submodule update
-        ./waf.bat configure -T release --build-games=cstrike --prefix=bin --32bits
-        ./waf.bat install
-
-    - name: 'Upload Artifact'
-      uses: actions/upload-artifact@v4
-      with:
-        name: windows-i386
-        path: bin
-
   build-windows-amd64:
     runs-on: windows-latest
 
@@ -49,21 +17,3 @@ jobs:
       with:
         name: windows-amd64
         path: bin
-
-  build-dedicated-windows-i386:
-    runs-on: windows-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Build dedicated windows-i386
-      run: |
-        git submodule init && git submodule update
-        ./waf.bat configure -T release --prefix=bin -d
-        ./waf.bat install 
-
-    - name: 'Upload Artifact'
-      uses: actions/upload-artifact@v3
-      with:
-        name: windows-dedicated-i386
-        path: bin
-
