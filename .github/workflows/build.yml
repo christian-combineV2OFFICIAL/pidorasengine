@@ -1,5 +1,5 @@
 on: [push, pull_request]
-
+ 
 jobs:
   build-windows-amd64:
     runs-on: windows-latest
